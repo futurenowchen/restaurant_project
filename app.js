@@ -23,12 +23,7 @@ app.get('/search', (req, res) => {
   const restaurants = restaurantList.results.filter(restaurant => {
     return restaurant.name.toLowerCase().includes(keyword.toLowerCase())
   })
-  if (restaurants.length === 0) {
-    res.render('notfound', { keyword: keyword })
-  } else {
-    res.render('index', { restaurants: restaurants })
-  }
-
+  res.render('index', { restaurants: restaurants, keyword: keyword })
 })
 
 app.listen(port, () => {
