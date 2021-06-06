@@ -21,7 +21,7 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 
 
-
+//顯示所有餐廳路由
 app.get('/', (req, res) => {
   restaurantList.find()
     .lean()
@@ -29,12 +29,15 @@ app.get('/', (req, res) => {
     .catch(error => console.log(error))
 })
 
+
 //為什麼get('/restaurants/new')，放在get('/restaurants/:restaurant_id')後面，會造成頁面將new當id讀入資料庫中，因而錯誤呢？
 
+//進入新增餐廳頁面路由
 app.get('/restaurants/new', (req, res) => {
   return res.render('new')
 })
 
+//查詢詳細餐廳資訊路由
 app.get('/restaurants/:restaurant_id', (req, res) => {
   const id = req.params.restaurant_id
   return restaurantList.findById(id)
@@ -43,6 +46,8 @@ app.get('/restaurants/:restaurant_id', (req, res) => {
     .catch(error => console.log(error))
 })
 
+
+//新增餐廳資訊功能路由
 app.post('/restaurants', (req, res) => {
   const restaurant = req.body
   return restaurantList.create({
@@ -61,6 +66,7 @@ app.post('/restaurants', (req, res) => {
     .catch(error => console.log(error))
 })
 
+//進入修改餐廳資訊路由
 app.get('/restaurants/:restaurant_id/edit', (req, res) => {
   const id = req.params.restaurant_id
   return restaurantList.findById(id)
@@ -69,6 +75,7 @@ app.get('/restaurants/:restaurant_id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
+//修改餐廳資訊功能路由
 app.post('/restaurants/:restaurant_id/edit', (req, res) => {
   const id = req.params.restaurant_id
   const editRestaurant = req.body
@@ -90,6 +97,7 @@ app.post('/restaurants/:restaurant_id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
+//刪除餐廳功能路由
 app.post('/restaurants/:restaurant_id/delete', (req, res) => {
   const id = req.params.restaurant_id
   return restaurantList.findById(id)
@@ -98,6 +106,7 @@ app.post('/restaurants/:restaurant_id/delete', (req, res) => {
     .catch(error => console.log(error))
 })
 
+//搜尋餐廳功能路由
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
   restaurantList.find({
