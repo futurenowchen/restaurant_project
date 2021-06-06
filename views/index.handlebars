@@ -52,10 +52,14 @@
                 </span>
               </a>
 
-              <span class="badge badge-pill badge-danger font-weight-normal">
-                Delete
-                <i class="far fa-trash-alt"></i>
-              </span>
+              <form action="/restaurants/{{ this._id }}/delete" method="POST" style="display: inline;">
+                <button type="submit" class="button_delete" id="button_delete"><span
+                    class="badge badge-pill badge-danger font-weight-normal">
+                    Delete
+                    <i class="far fa-trash-alt"></i>
+                  </span>
+                </button>
+              </form>
             </div>
           </div>
         </div>

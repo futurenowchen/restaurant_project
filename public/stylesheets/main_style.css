@@ -78,6 +78,12 @@ header {
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+.button_delete{
+  background-color:white;
+  border-color:white;
+  border: 0;
+}
+
 @media screen and (max-width: 992px) {
   
   .card img{

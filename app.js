@@ -90,12 +90,25 @@ app.post('/restaurants/:restaurant_id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
+app.post('/restaurants/:restaurant_id/delete', (req, res) => {
+  const id = req.params.restaurant_id
+  return restaurantList.findById(id)
+    .then(restaurant => restaurant.remove())
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
 app.get('/search', (req, res) => {
-  const keyword = req.query.keyword.trim()
-  const restaurants = restaurantList.results.filter(restaurant => {
-    return restaurant.name.toLowerCase().includes(keyword.toLowerCase())
+  const keyword = req.query.keyword
+  restaurantList.find({
+    '$or': [
+      { 'name': { $regex: keyword, $options: '$i' } },
+      { 'category': { $regex: keyword, $options: '$i' } }
+    ]
   })
-  res.render('index', { restaurants: restaurants, keyword: keyword })
+    .lean()
+    .then(restaurants => res.render('index', { restaurants: restaurants }))
+    .catch(error => console.log(error))
 })
 
 
