@@ -61,6 +61,35 @@ app.post('/restaurants', (req, res) => {
     .catch(error => console.log(error))
 })
 
+app.get('/restaurants/:restaurant_id/edit', (req, res) => {
+  const id = req.params.restaurant_id
+  return restaurantList.findById(id)
+    .lean()
+    .then((restaurant) => res.render('edit', { restaurant: restaurant }))
+    .catch(error => console.log(error))
+})
+
+app.post('/restaurants/:restaurant_id/edit', (req, res) => {
+  const id = req.params.restaurant_id
+  const editRestaurant = req.body
+  return restaurantList.findById(id)
+    .then(restaurant => {
+      restaurant.id = editRestaurant.id,
+        restaurant.name = editRestaurant.name,
+        restaurant.name_en = editRestaurant.name_en,
+        restaurant.category = editRestaurant.category,
+        restaurant.image = editRestaurant.image,
+        restaurant.location = editRestaurant.location,
+        restaurant.phone = editRestaurant.phone,
+        restaurant.google_map = editRestaurant.google_map,
+        restaurant.rating = editRestaurant.rating,
+        restaurant.description = editRestaurant.description
+      return restaurant.save()
+    })
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword.trim()
   const restaurants = restaurantList.results.filter(restaurant => {

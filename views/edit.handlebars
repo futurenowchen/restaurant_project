@@ -1,14 +1,14 @@
-<h1 class="mb-1 restaurant-show-title">新增餐廳資料</h1>
+<h1 class="mb-1 restaurant-show-title">修改餐廳資料</h1>
 
 <div class="container">
-  <form action="/restaurants" method="POST">
+  <form action="/restaurants/{{restaurant._id}}/edit" method="POST">
 
     <div class="form-group form-row justify-content-center">
       <label for="name" class="col-md-1 col-form-label">
         中文名稱
       </label>
       <div class="col-md-8">
-        <input type="text" name="name" class="form-control" id="name">
+        <input type="text" name="name" class="form-control" id="name" value="{{restaurant.name}}">
       </div>
     </div>
 
@@ -17,7 +17,7 @@
         英文名稱
       </label>
       <div class="col-md-8">
-        <input type="text" name="name_en" class="form-control" id="name_en">
+        <input type="text" name="name_en" class="form-control" id="name_en" value="{{restaurant.name_en}}">
       </div>
     </div>
 
@@ -26,7 +26,7 @@
         類別
       </label>
       <div class="col-md-8">
-        <input list="categories" class="form-control" name="category" id="category">
+        <input list="categories" class="form-control" name="category" id="category" value="{{restaurant.category}}">
         <datalist id="categories">
           <option>中東料理</option>
           <option>日本料理</option>
@@ -43,7 +43,7 @@
         照片網址
       </label>
       <div class="col-md-8">
-        <input type="text" name="image" class="form-control" id="image">
+        <input type="text" name="image" class="form-control" id="image" value="{{restaurant.image}}">
       </div>
     </div>
 
@@ -52,7 +52,7 @@
         地址
       </label>
       <div class="col-md-8">
-        <input type="text" name="location" class="form-control" id="location">
+        <input type="text" name="location" class="form-control" id="location" value="{{restaurant.location}}">
       </div>
     </div>
 
@@ -61,7 +61,7 @@
         電話
       </label>
       <div class="col-md-8">
-        <input type="text" name="phone" class="form-control" id="phone">
+        <input type="text" name="phone" class="form-control" id="phone" value="{{restaurant.phone}}">
         <small class="text-muted form-text">範例：02 2507 0633</small>
       </div>
     </div>
@@ -71,7 +71,7 @@
         Google Map 網址
       </label>
       <div class="col-md-8">
-        <input type="text" name="google_map" class="form-control" id="google_map">
+        <input type="text" name="google_map" class="form-control" id="google_map" value="{{restaurant.google_map}}">
       </div>
     </div>
 
@@ -80,7 +80,8 @@
         評分
       </label>
       <div class="col-md-8">
-        <input type="number" name="rating" class="form-control" id="rating" min="0.0" max="5.0" step="0.1">
+        <input type="number" name="rating" class="form-control" id="rating" min="0.0" max="5.0" step="0.1"
+          value="{{restaurant.rating}}">
         <small class="text-muted form-text">請輸入0-5之間的數字，如：4.7</small>
       </div>
     </div>
@@ -90,11 +91,11 @@
         簡介
       </label>
       <div class="col-md-8">
-        <input type="text" name="description" class="form-control" id="description">
+        <input type="text" name="description" class="form-control" id="description" value="{{restaurant.description}}">
       </div>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">確認新增</button>
+      <button type="submit" class="btn btn-primary">確認修改</button>
     </div>
   </form>
 </div>

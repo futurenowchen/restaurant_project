@@ -22,24 +22,43 @@
     <div class="col-md-10 col-12 mx-auto">
       <div class="card-columns">
         {{# each restaurants}}
-        <a href="/restaurants/{{this._id}}" class="text-secondary">
-          <div class="card mb-3">
-            <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
-            <div class="card-body p-3">
-              <h6 class="card-title mb-1">{{this.name}}</h6>
-
-              <div class="restaurant-category mb-1">
-                <i class="fas fa-utensils pr-2"></i> {{this.category}}
-              </div>
-
+        <div class="card mb-3">
+          <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
+          <div class="card-body p-3">
+            <h6 class="card-title mb-1 d-inline-block">
+              {{this.name}}
               <span class="badge badge-pill badge-danger font-weight-normal">
                 {{this.rating}}
                 <i class="fas fa-star fa-xs"></i>
               </span>
+            </h6>
 
+            <div class="restaurant-category mb-1">
+              <i class="fas fa-utensils pr-2"></i> {{this.category}}
+            </div>
+
+            <div>
+              <a href="./restaurants/{{ this._id }}/edit">
+                <span class="badge badge-pill badge-danger font-weight-normal">
+                  Edit
+                  <i class="far fa-edit"></i>
+                </span>
+              </a>
+
+              <a href="/restaurants/{{this._id}}" class="text-secondary">
+                <span class="badge badge-pill badge-danger font-weight-normal">
+                  Detail
+                  <i class="fas fa-info-circle"></i>
+                </span>
+              </a>
+
+              <span class="badge badge-pill badge-danger font-weight-normal">
+                Delete
+                <i class="far fa-trash-alt"></i>
+              </span>
             </div>
           </div>
-        </a>
+        </div>
         {{/each}}
       </div>
       <script>
