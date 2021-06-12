@@ -2,9 +2,10 @@ const express = require('express')
 const app = express()
 const port = 3000
 const exphbs = require('express-handlebars')
-const restaurantList = require('./models/restaurants.js')
+const RestaurantList = require('./models/restaurants.js')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 
 mongoose.connect('mongodb://localhost/restaurants', { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection
@@ -19,16 +20,17 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
+
 
 
 //顯示所有餐廳路由
 app.get('/', (req, res) => {
-  restaurantList.find()
+  RestaurantList.find()
     .lean()
     .then(restaurants => res.render('index', { restaurants: restaurants }))
     .catch(error => console.log(error))
 })
-
 
 //為什麼get('/restaurants/new')，放在get('/restaurants/:restaurant_id')後面，會造成頁面將new當id讀入資料庫中，因而錯誤呢？
 
@@ -40,7 +42,7 @@ app.get('/restaurants/new', (req, res) => {
 //查詢詳細餐廳資訊路由
 app.get('/restaurants/:restaurant_id', (req, res) => {
   const id = req.params.restaurant_id
-  return restaurantList.findById(id)
+  return RestaurantList.findById(id)
     .lean()
     .then((restaurant) => res.render('show', { restaurant: restaurant }))
     .catch(error => console.log(error))
@@ -50,7 +52,7 @@ app.get('/restaurants/:restaurant_id', (req, res) => {
 //新增餐廳資訊功能路由
 app.post('/restaurants', (req, res) => {
   const restaurant = req.body
-  return restaurantList.create({
+  return RestaurantList.create({
     id: restaurant.id,
     name: restaurant.name,
     name_en: restaurant.name_en,
@@ -69,17 +71,17 @@ app.post('/restaurants', (req, res) => {
 //進入修改餐廳資訊路由
 app.get('/restaurants/:restaurant_id/edit', (req, res) => {
   const id = req.params.restaurant_id
-  return restaurantList.findById(id)
+  return RestaurantList.findById(id)
     .lean()
     .then((restaurant) => res.render('edit', { restaurant: restaurant }))
     .catch(error => console.log(error))
 })
 
 //修改餐廳資訊功能路由
-app.post('/restaurants/:restaurant_id/edit', (req, res) => {
+app.put('/restaurants/:restaurant_id', (req, res) => {
   const id = req.params.restaurant_id
   const editRestaurant = req.body
-  return restaurantList.findById(id)
+  return RestaurantList.findById(id)
     .then(restaurant => {
       restaurant.id = editRestaurant.id,
         restaurant.name = editRestaurant.name,
@@ -98,9 +100,9 @@ app.post('/restaurants/:restaurant_id/edit', (req, res) => {
 })
 
 //刪除餐廳功能路由
-app.post('/restaurants/:restaurant_id/delete', (req, res) => {
+app.delete('/restaurants/:restaurant_id', (req, res) => {
   const id = req.params.restaurant_id
-  return restaurantList.findById(id)
+  return RestaurantList.findById(id)
     .then(restaurant => restaurant.remove())
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
@@ -109,14 +111,14 @@ app.post('/restaurants/:restaurant_id/delete', (req, res) => {
 //搜尋餐廳功能路由
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
-  restaurantList.find({
+  RestaurantList.find({
     '$or': [
       { 'name': { $regex: keyword, $options: '$i' } },
       { 'category': { $regex: keyword, $options: '$i' } }
     ]
   })
     .lean()
-    .then(restaurants => res.render('index', { restaurants: restaurants }))
+    .then(restaurants => res.render('index', { restaurants: restaurants, keyword: keyword }))
     .catch(error => console.log(error))
 })
 

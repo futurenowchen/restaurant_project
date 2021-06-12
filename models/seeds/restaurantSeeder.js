@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const restaurants = require('../restaurants')
+const Restaurants = require('../restaurants')
 
 mongoose.connect('mongodb://localhost/restaurants', { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection
@@ -110,7 +110,7 @@ db.on('error', () => {
 db.once('open', () => {
   console.log('mongodb connected!')
   restaurantSeeder.forEach((restaurant) => {
-    restaurants.create({
+    Restaurants.create({
       id: restaurant.id,
       name: restaurant.name,
       name_en: restaurant.name_en,
