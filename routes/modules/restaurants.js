@@ -7,6 +7,20 @@ router.get('/new', (req, res) => {
   return res.render('new')
 })
 
+//搜尋餐廳功能路由
+router.get('/search', (req, res) => {
+  const keyword = req.query.keyword
+  RestaurantList.find({
+    '$or': [
+      { 'name': { $regex: keyword, $options: '$i' } },
+      { 'category': { $regex: keyword, $options: '$i' } }
+    ]
+  })
+    .lean()
+    .then(restaurants => res.render('index', { restaurants: restaurants, keyword: keyword }))
+    .catch(error => console.log(error))
+})
+
 //查詢詳細餐廳資訊路由
 router.get('/:restaurant_id', (req, res) => {
   const id = req.params.restaurant_id
@@ -15,7 +29,6 @@ router.get('/:restaurant_id', (req, res) => {
     .then((restaurant) => res.render('show', { restaurant: restaurant }))
     .catch(error => console.log(error))
 })
-
 
 //新增餐廳資訊功能路由
 router.post('/', (req, res) => {
