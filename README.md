@@ -12,6 +12,7 @@
 + express-handlebars v5.3.2
 + body-parser v1.19.0
 + mongoose v5.12.13
++ method-override v3.0.0
 + Font Awesome
 
 ## installation and execution
