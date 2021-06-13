@@ -47,3 +47,7 @@ or
 + 使用者可以新增餐廳資訊
 + 使用者可以修改餐廳資訊
 + 使用者可以刪除餐廳資訊
+
+### Version 3
++ use Method-override to modify routes.
++ modify mongooose to config.
