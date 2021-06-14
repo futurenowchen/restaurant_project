@@ -21,6 +21,31 @@ router.get('/search', (req, res) => {
     .catch(error => console.log(error))
 })
 
+//餐廳排序功能
+router.post('/sort', (req, res) => {
+  const sortInput = Number(req.body.sort)
+  const sortOutput = {}
+  switch (sortInput) {
+    case 1:
+      sortOutput.name = 'asc'
+      break
+    case 2:
+      sortOutput.name = 'desc'
+      break
+    case 3:
+      sortOutput.category = 'asc'
+      break
+    case 4:
+      sortOutput.location = 'asc'
+      break
+  }
+  RestaurantList.find()
+    .lean()
+    .sort(sortOutput)
+    .then(restaurants => res.render('index', { restaurants: restaurants }))
+    .catch(error => console.log(error))
+})
+
 //查詢詳細餐廳資訊路由
 router.get('/:restaurant_id', (req, res) => {
   const id = req.params.restaurant_id

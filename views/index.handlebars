@@ -1,9 +1,8 @@
 <!-- search bar -->
 <div class="container search-bar">
-  <div class="search-bar-outer">
+  <div class="search-bar-outer d-flex justify-content-between align-items-center">
     <div class="search-bar-inner">
-      <form action="restaurants/search">
-        <h4 class="mb-2">尋找餐廳：</h4>
+      <form action="/restaurants/search">
         <div class="input-group">
           <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
             value="{{keyword}}" aria-describedby="search-button">
@@ -13,8 +12,24 @@
         </div>
       </form>
     </div>
+
+
+    <div class="form-group mb-0">
+      <form action="/restaurants/sort" method="POST">
+        <label for="sort" class="mb-0">餐廳排序</label>
+        <select name="sort" id="sort" onchange="action='/restaurants/sort'; submit();">
+          <option>建置時間（預設）</option>
+          <option value=" 1">A -> Z</option>
+          <option value="2">Z -> A</option>
+          <option value="3">類別</option>
+          <option value="4">地區</option>
+        </select>
+        {{!-- <button type="submit" id="sort-button"><i class="fas fa-sort"></i></button> --}}
+      </form>
+    </div>
   </div>
 </div>
+
 
 <!-- restaurant list -->
 <div class="container mt-5">
@@ -53,7 +68,7 @@
               </a>
 
               <form action="/restaurants/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
-                <button type="submit" class="button_delete" id="button_delete"><span
+                <button type="submit" class="button_delete"><span
                     class="badge badge-pill badge-danger font-weight-normal">
                     Delete
                     <i class="far fa-trash-alt"></i>
