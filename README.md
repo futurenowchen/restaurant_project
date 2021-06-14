@@ -50,5 +50,6 @@ or
 + 使用者可以刪除餐廳資訊
 
 ### Version 3
-+ use Method-override to modify routes.
-+ modify mongooose to config.
++ Use Method-override to modify routes.
++ Modify mongoose to config.
++ User can use sort function.
