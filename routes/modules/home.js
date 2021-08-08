@@ -5,7 +5,8 @@ const RestaurantList = require('../../models/restaurants.js')
 
 //顯示所有餐廳路由
 router.get('/', (req, res) => {
-  RestaurantList.find()
+  const userId = req.user._id
+  RestaurantList.find({ userId })
     .lean()
     .sort({ _id: 'asc' })
     .then(restaurants => res.render('index', { restaurants: restaurants }))

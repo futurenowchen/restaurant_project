@@ -80,13 +80,16 @@
         </div>
         {{/each}}
       </div>
-      <script>
-        let searchNumber = {{ restaurants.length }}
-        if (searchNumber === 0) {
-          alert("找不到您所搜尋的{{keyword}}，請嘗試重新查詢！")
-          document.location.href = "/"
-        }
-      </script>
     </div>
   </div>
 </div>
+
+
+
+<script>
+  let searchNumber = {{ restaurants.length }}
+  if (searchNumber === 0) {
+    alert("找不到您所搜尋的{{keyword}}，請嘗試重新查詢！")
+    document.location.href = "/"
+  }
+</script>
